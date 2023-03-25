@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿵쿵따 게임</title>
+</head>
+<body>
+<div><span id="order">1</span>번째 참가자 차례입니다.</div>
+<div><span id="word"></span> 쿵쿵따!</div>
+<input type="text">
+<button>쿵쿵따!</button>
+
+<script>
+    const number = parseInt(prompt('인원수를 입력하세요.',10));
+    const $input = document.querySelector('input');
+    const $word = document.querySelector('#word');
+    const $button = document.querySelector('button');
+    const $order = document.querySelector('#order');
+    let word; // 제시어
+    let newWord; //새로 입력한 단어
+
+    if(isNaN(number)){ //prompt에서 취소를 입력했을 경우
+        alert('코드 진행을 중단합니다.');
+    }else{
+        const onClickButton = () =>{
+            if(!word||(word[word.length-1]===newWord[0]&&newWord.length===3)){ //제시어가 비어있는가?
+                word = newWord; //입력한 단어가 제시어가 된다.
+                $word.textContent = word;
+                const order = Number($order.textContent);
+                if(order +1 > number){
+                    $order.textContent = 1;
+                }else{
+                    $order.textContent = order + 1;
+                }
+                $input.value = '';
+                $input.focus();
+            }else{ //정상적인 경우가 아닐 경우
+                alert('다시 입력하세요.');
+                $input.value='';
+                $input.focus();
+                }
+            }
+            const onInput = (event) =>{
+                newWord = event.target.value;
+            }
+            $button.addEventListener('click',onClickButton);
+            $input.addEventListener('input',onInput);
+    } 
+</script>
+</body>
+</html>
